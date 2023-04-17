@@ -1,0 +1,91 @@
+﻿@page "/Swedish"
+@using QuizCounter.Data
+
+<div class="container">
+
+    <div class="d-grid d-flex justify-content-end">
+        <button type="reset" class="btn oi oi-reload" @onclick="allReset" />
+    </div>
+    
+    <input class="mb-3" placeholder="initial value?" @bind="initialValue">
+    <div class="row">
+        @foreach (var counter in counters)
+        {
+            <div class="card col-3 p-0 m-1" @key="counter.Id">
+                <div class="card-body text-center">
+                    <div class="d-grid d-flex justify-content-end">
+                        <button type="button" class="btn align-end m-0 oi oi-reload" @onclick="@(e => reset(counter.Id))" />
+                        <button type="button" class="btn align-end m-0 oi oi-minus" @onclick="@(e => delete(counter.Id))" />
+                    </div>
+
+                    <input placeholder="Name?" class="col-10 my-2">
+
+                    <h1 class="card-title">@counter.Score</h1>
+
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <h1>@counter.Correct</h1>
+                                <button type="button" class="btn btn-danger px-3 oi oi-circle-check" @onclick="@(e => onCorrect(counter.Id))" />
+                            </div>
+                            <div class="col">
+                                <h1>@counter.Worng</h1>
+                                <button type="button" class="btn btn-primary px-3 oi oi-circle-x" @onclick="@(e => onWorng(counter.Id))" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <button type="button" class="btn oi oi-plus" @onclick="addCard" />
+    </div>
+</div>
+
+@code {
+    private List<CounterModel> counters = new();
+
+    private void addCard()
+    {
+        counters.Add(new CounterModel());
+    }
+
+    private int initialValue = 10;
+
+    private void onCorrect(Guid key)
+    {
+        counters.Single(c => c.Id == key).Correct++;
+    }
+
+    private void onWorng(Guid key)
+    {
+        var correct = counters.Single(c => c.Id == key).Correct;
+        // TODO: 境界値が合わない
+        counters.Single(c => c.Id == key).Worng += (int)Math.Ceiling(-1 + Math.Sqrt( 1 + 8*(correct+1)) / 2);
+    }
+
+    private void calcScore(CounterModel counter)
+    {
+        counter.Score = counter.Correct * counter.Worng;
+    }
+
+    private void reset(Guid key)
+    {
+        counters.Single(c => c.Id == key).Reset();
+    }
+
+    private void delete(Guid key)
+    {
+        counters.RemoveAll(c => c.Id == key);
+    }
+    
+    private void allReset()
+    {
+        foreach (var counter in counters)
+        {
+            counter.Reset();
+        }
+    }
+}
+
+
