@@ -1,4 +1,4 @@
-namespace QuizCounter.Data;
+namespace QuizCounter.Model;
 
 public class CounterModel
 {

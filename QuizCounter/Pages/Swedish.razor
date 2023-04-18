@@ -1,5 +1,5 @@
 ﻿@page "/Swedish"
-@using QuizCounter.Data
+@using QuizCounter.Model
 
 <div class="container">
 
@@ -47,8 +47,6 @@
         counters.Add(new CounterModel());
     }
 
-    private int initialValue = 10;
-
     private void onCorrect(Guid key)
     {
         counters.Single(c => c.Id == key).Correct++;
@@ -57,7 +55,6 @@
     private void onWorng(Guid key)
     {
         var correct = counters.Single(c => c.Id == key).Correct;
-        // TODO: 境界値が合わない
         counters.Single(c => c.Id == key).Worng += (int)Math.Ceiling(Math.Ceiling(-1+Math.Sqrt(1+8*(correct+1)))/2);
     }
 
