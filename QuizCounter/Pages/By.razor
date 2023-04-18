@@ -47,6 +47,11 @@
 @code {
     private int initialValue = 10;
 
+    protected override void OnInitialized()
+    {
+        counters.Add(new CounterModel(){Worng = initialValue});
+    }
+
     private List<CounterModel> counters = new();
 
     private void addCard()

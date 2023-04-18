@@ -49,6 +49,11 @@
 
     private List<CounterModel> counters = new();
 
+    protected override void OnInitialized()
+    {
+        counters.Add(new CounterModel(){Score = initialValue});
+    }
+
     private void addCard()
     {
         counters.Add(new CounterModel(){Score = initialValue});
@@ -86,5 +91,7 @@
         }
     }
 }
+
+
 
 
