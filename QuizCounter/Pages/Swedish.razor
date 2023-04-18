@@ -57,7 +57,7 @@
     private void onWorng(Guid key)
     {
         var correct = counters.Single(c => c.Id == key).Correct;
-        counters.Single(c => c.Id == key).Worng += (int)Math.Ceiling(Math.Ceiling(-1+Math.Sqrt(1+8*(correct+1)))/2);
+        counters.Single(c => c.Id == key).Worng += (int)Math.Ceiling((-1+Math.Sqrt(1+8*(correct+1)))/2);
     }
 
     private void calcScore(CounterModel counter)
