@@ -7,7 +7,6 @@
         <button type="reset" class="btn oi oi-reload" @onclick="allReset" />
     </div>
     
-    <input class="mb-3" placeholder="initial value?" @bind="initialValue">
     <div class="row">
         @foreach (var counter in counters)
         {
@@ -20,9 +19,7 @@
 
                     <input placeholder="Name?" class="col-10 my-2">
 
-                    <h1 class="card-title">@counter.Score</h1>
-
-                    <div class="container">
+                    <div class="container mt-4">
                         <div class="row">
                             <div class="col">
                                 <h1>@counter.Correct</h1>
@@ -61,7 +58,7 @@
     {
         var correct = counters.Single(c => c.Id == key).Correct;
         // TODO: 境界値が合わない
-        counters.Single(c => c.Id == key).Worng += (int)Math.Ceiling(-1 + Math.Sqrt( 1 + 8*(correct+1)) / 2);
+        counters.Single(c => c.Id == key).Worng += (int)Math.Ceiling(Math.Ceiling(-1+Math.Sqrt(1+8*(correct+1)))/2);
     }
 
     private void calcScore(CounterModel counter)
