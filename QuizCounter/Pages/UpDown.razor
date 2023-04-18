@@ -7,29 +7,31 @@
         <button type="reset" class="btn oi oi-reload" @onclick="allReset" />
     </div>
     
-    <div class="row row-cols-3 row-cols-md-4 row-cols-xl-5">
+    <div class="row row-cols-3 row-cols-md-4 row-cols-xl-5 g-3">
         @foreach (var counter in counters)
         {
-            <div class="col card p-0 m-1" @key="counter.Id">
-                <div class="card-body text-center">
-                    <div class="d-grid d-flex justify-content-end">
-                        <button type="button" class="btn align-end m-0 oi oi-reload" @onclick="@(e => reset(counter.Id))" />
-                        <button type="button" class="btn align-end m-0 oi oi-minus" @onclick="@(e => delete(counter.Id))" />
-                    </div>
+            <div class="col">
+                <div class="card" @key="counter.Id">
+                    <div class="card-body text-center">
+                        <div class="d-grid d-flex justify-content-end">
+                            <button type="button" class="btn align-end m-0 oi oi-reload" @onclick="@(e => reset(counter.Id))" />
+                            <button type="button" class="btn align-end m-0 oi oi-minus" @onclick="@(e => delete(counter.Id))" />
+                        </div>
 
-                    <input placeholder="Name?" class="col-10 my-2">
+                        <input placeholder="Name?" class="col-10 my-2">
 
-                    <h1 class="card-title">@counter.Score</h1>
+                        <h1 class="card-title">@counter.Score</h1>
 
-                    <div class="container">
-                        <div class="row">
-                            <div class="col">
-                                <h2>@counter.Correct</h2>
-                                <button type="button" class="btn btn-danger px-3 oi oi-circle-check" @onclick="@(e => onCorrect(counter.Id))" />
-                            </div>
-                            <div class="col">
-                                <h2>@counter.Worng</h2>
-                                <button type="button" class="btn btn-primary px-3 oi oi-circle-x" @onclick="@(e => onWorng(counter.Id))" />
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h2>@counter.Correct</h2>
+                                    <button type="button" class="btn btn-danger px-3 oi oi-circle-check" @onclick="@(e => onCorrect(counter.Id))" />
+                                </div>
+                                <div class="col">
+                                    <h2>@counter.Worng</h2>
+                                    <button type="button" class="btn btn-primary px-3 oi oi-circle-x" @onclick="@(e => onWorng(counter.Id))" />
+                                </div>
                             </div>
                         </div>
                     </div>
