@@ -15,6 +15,14 @@
                 <div class="card" @key="counter.Id">
                     <div class="card-body text-center">
                         <div class="d-grid d-flex justify-content-end">
+                            @if (counter.UndoStack.Any())
+                            {
+                                <button type="button" class="btn m-0 oi oi-action-undo" @onclick="@(e => undo(counter.Id))" />
+                            }
+                            else
+                            {
+                                <button type="button" class="btn m-0 oi oi-action-undo" disabled />
+                            }
                             <button type="button" class="btn align-end m-0 oi oi-reload" @onclick="@(e => reset(counter.Id))" />
                             <button type="button" class="btn align-end m-0 oi oi-minus" @onclick="@(e => delete(counter.Id))" />
                         </div>
@@ -72,15 +80,25 @@
 
     private void onCorrect(Guid key)
     {
+        counters.Single(c => c.Id == key).PushUndoStack();
+
         counters.Single(c => c.Id == key).Correct++;
         calcScore(counters.Single(c => c.Id == key));
     }
 
     private void onWorng(Guid key)
     {
+        counters.Single(c => c.Id == key).PushUndoStack();
+
         counters.Single(c => c.Id == key).Worng--;
         calcScore(counters.Single(c => c.Id == key));
     }
+
+    private void undo(Guid key)
+    {
+        counters.Single(c => c.Id == key).Undo();
+    }
+
 
     private void calcScore(CounterModel counter)
     {
